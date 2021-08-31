@@ -414,7 +414,7 @@ public class CoffeeMakerTest {
             inventory.addCoffee("-100");
         } catch (InventoryException e) {
             try {
-                inventory.addCoffee("-100");
+                inventory.addCoffee("100.50");
             } catch (InventoryException e2) {
                 inventory.addCoffee("abc");
             }
@@ -433,7 +433,7 @@ public class CoffeeMakerTest {
             inventory.addSugar("-100");
         } catch (InventoryException e) {
             try {
-                inventory.addSugar("-100");
+                inventory.addSugar("100.50");
             } catch (InventoryException e2) {
                 inventory.addSugar("abc");
             }
@@ -452,7 +452,7 @@ public class CoffeeMakerTest {
             inventory.addMilk("-100");
         } catch (InventoryException e) {
             try {
-                inventory.addMilk("-100");
+                inventory.addMilk("100.50");
             } catch (InventoryException e2) {
                 inventory.addMilk("abc");
             }
@@ -471,7 +471,7 @@ public class CoffeeMakerTest {
             inventory.addChocolate("-100");
         } catch (InventoryException e) {
             try {
-                inventory.addChocolate("-100");
+                inventory.addChocolate("100.50");
             } catch (InventoryException e2) {
                 inventory.addChocolate("abc");
             }
