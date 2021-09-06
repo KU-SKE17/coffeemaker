@@ -55,45 +55,46 @@ public class CoffeeMakerTest {
     public void setUp() throws RecipeException {
         coffeeMaker = new CoffeeMaker();
 
-        //Set up for r1
-        recipe1 = new Recipe();
-        recipe1.setName("Coffee");
-        recipe1.setAmtChocolate("0");
-        recipe1.setAmtCoffee("3");
-        recipe1.setAmtMilk("1");
-        recipe1.setAmtSugar("1");
-        recipe1.setPrice("50");
+        //Set up for recipe1
+        recipe1 = createRecipe("Coffee", 50, 3, 1, 1, 0);
 
-        //Set up for r2
-        recipe2 = new Recipe();
-        recipe2.setName("Mocha");
-        recipe2.setAmtChocolate("20");
-        recipe2.setAmtCoffee("3");
-        recipe2.setAmtMilk("1");
-        recipe2.setAmtSugar("1");
-        recipe2.setPrice("75");
+        //Set up for recipe2
+        recipe2 = createRecipe("Mocha", 75, 3, 1, 1, 20);
 
-        //Set up for r3
-        recipe3 = new Recipe();
-        recipe3.setName("Latte");
-        recipe3.setAmtChocolate("0");
-        recipe3.setAmtCoffee("3");
-        recipe3.setAmtMilk("3");
-        recipe3.setAmtSugar("1");
-        recipe3.setPrice("100");
+        //Set up for recipe3
+        recipe3 = createRecipe("Latte", 100, 3, 3, 1, 0);
 
-        //Set up for r4
-        recipe4 = new Recipe();
-        recipe4.setName("Hot Chocolate");
-        recipe4.setAmtChocolate("4");
-        recipe4.setAmtCoffee("3");
-        recipe4.setAmtMilk("1");
-        recipe4.setAmtSugar("1");
-        recipe4.setPrice("65");
+        //Set up for recipe4
+        recipe4 = createRecipe("Hot Chocolate", 65, 3, 1, 1, 4);
+    }
+
+    /**
+     * Return a new Recipe
+     *
+     * @param name
+     * @param price
+     * @param amtCoffee
+     * @param amtMilk
+     * @param amtSugar
+     * @param amtChocolate
+     * @return new recipe
+     * @throws RecipeException
+     */
+    private Recipe createRecipe(String name, int price, int amtCoffee, int amtMilk, int amtSugar, int amtChocolate) throws RecipeException {
+        Recipe recipe = new Recipe();
+        recipe.setName(name);
+        recipe.setPrice(String.valueOf(price));
+        recipe.setAmtCoffee(String.valueOf(amtCoffee));
+        recipe.setAmtMilk(String.valueOf(amtMilk));
+        recipe.setAmtSugar(String.valueOf(amtSugar));
+        recipe.setAmtChocolate(String.valueOf(amtChocolate));
+        return recipe;
     }
 
     /**
      * Test recipeBook and inventory of new CoffeeMaker
+     *
+     * @TestCase A1
      */
     @Test
     public void testInitialCoffeeMaker() {
@@ -105,6 +106,8 @@ public class CoffeeMakerTest {
 
     /**
      * Test adding a recipe to CoffeeMaker recipe book
+     *
+     * @TestCase A2
      */
     @Test
     public void testAddRecipe() {
@@ -118,6 +121,8 @@ public class CoffeeMakerTest {
 
     /**
      * Test deleting a recipe from CoffeeMaker recipe book
+     *
+     * @TestCase A3
      */
     @Test
     public void testDeleteRecipe() {
@@ -128,6 +133,8 @@ public class CoffeeMakerTest {
 
     /**
      * Test editing recipe in CoffeeMaker recipe book
+     *
+     * @TestCase A4
      */
     @Test
     public void testEditRecipe() {
@@ -148,6 +155,7 @@ public class CoffeeMakerTest {
      * Test adding ingredients to CoffeeMaker inventory
      *
      * @throws InventoryException when use invalid unit in Inventory class
+     * @TestCase A5
      */
     @Test
     public void testAddInventory() throws InventoryException {
@@ -172,6 +180,7 @@ public class CoffeeMakerTest {
      * Test if checkInventory() return correct string
      *
      * @throws InventoryException when use invalid unit in Inventory class
+     * @TestCase A6
      */
     @Test
     public void testCheckInventory() throws InventoryException {
@@ -188,6 +197,8 @@ public class CoffeeMakerTest {
 
     /**
      * Test purchasing beverage with enough money and ingredients
+     *
+     * @TestCase A7
      */
     @Test
     public void testMakeCoffee() {
@@ -207,6 +218,8 @@ public class CoffeeMakerTest {
 
     /**
      * Test purchasing an empty recipe beverage
+     *
+     * @TestCase A8
      */
     @Test
     public void testMakeEmptyRecipeCoffee() {
@@ -219,6 +232,8 @@ public class CoffeeMakerTest {
 
     /**
      * Test purchasing beverage with not enough ingredients in the inventory
+     *
+     * @TestCase A9
      */
     @Test
     public void testMakeNotEnoughIngredientsCoffee() {
@@ -231,6 +246,8 @@ public class CoffeeMakerTest {
 
     /**
      * Test purchasing beverage with money less than the price of the drink
+     *
+     * @TestCase A10
      */
     @Test
     public void testMakeNotEnoughMoneyCoffee() {
@@ -244,6 +261,8 @@ public class CoffeeMakerTest {
 
     /**
      * Test adding the 4th recipe
+     *
+     * @TestCase B1
      */
     @Test
     public void testAddFourthRecipe() {
@@ -255,6 +274,8 @@ public class CoffeeMakerTest {
 
     /**
      * Test adding recipe with the existing name
+     *
+     * @TestCase B2
      */
     @Test
     public void testAddSameRecipeName() {
@@ -265,6 +286,8 @@ public class CoffeeMakerTest {
 
     /**
      * Test deleting recipe swing steps
+     *
+     * @TestCase B3
      */
     @Test
     public void testDeleteRecipeStep() {
@@ -277,7 +300,19 @@ public class CoffeeMakerTest {
     }
 
     /**
+     * Test deleting an empty recipe
+     *
+     * @TestCase B4
+     */
+    @Test
+    public void testDeleteEmptyRecipe() {
+        assertNull(coffeeMaker.deleteRecipe(0));
+    }
+
+    /**
      * Test deleting recipe with number that is out of bounds of the number of recipes
+     *
+     * @TestCase B5
      */
     @Test
     public void testDeleteOutOfBoundRecipe() {
@@ -288,15 +323,9 @@ public class CoffeeMakerTest {
     }
 
     /**
-     * Test deleting an empty recipe
-     */
-    @Test
-    public void testDeleteEmptyRecipe() {
-        assertNull(coffeeMaker.deleteRecipe(0));
-    }
-
-    /**
      * Test editing recipe with number that is out of bounds of the number of recipes
+     *
+     * @TestCase B6
      */
     @Test
     public void testEditEmptyRecipe() {
@@ -305,6 +334,8 @@ public class CoffeeMakerTest {
 
     /**
      * Test editing an empty recipe
+     *
+     * @TestCase B7
      */
     @Test
     public void testEditOutOfBoundRecipe() {
@@ -316,6 +347,7 @@ public class CoffeeMakerTest {
      * Test setting a recipe with invalid price
      *
      * @throws RecipeException when use invalid price in Recipe class
+     * @TestCase C1
      */
     @Test(expected = RecipeException.class)
     public void testSetInvalidPriceRecipe() throws RecipeException {
@@ -334,6 +366,7 @@ public class CoffeeMakerTest {
      * Test setting a recipe with invalid unit of coffee
      *
      * @throws RecipeException when use invalid unit in Recipe class
+     * @TestCase C2
      */
     @Test(expected = RecipeException.class)
     public void testSetInvalidCoffeeRecipe() throws RecipeException {
@@ -352,6 +385,7 @@ public class CoffeeMakerTest {
      * Test setting a recipe with invalid unit of sugar
      *
      * @throws RecipeException when use invalid unit in Recipe class
+     * @TestCase C3
      */
     @Test(expected = RecipeException.class)
     public void testSetInvalidSugarRecipe() throws RecipeException {
@@ -370,6 +404,7 @@ public class CoffeeMakerTest {
      * Test setting a recipe with invalid unit of milk
      *
      * @throws RecipeException when use invalid unit in Recipe class
+     * @TestCase C4
      */
     @Test(expected = RecipeException.class)
     public void testSetInvalidMilkRecipe() throws RecipeException {
@@ -388,6 +423,7 @@ public class CoffeeMakerTest {
      * Test setting a recipe with invalid unit of chocolate
      *
      * @throws RecipeException when use invalid unit in Recipe class
+     * @TestCase C5
      */
     @Test(expected = RecipeException.class)
     public void testSetInvalidChocolateRecipe() throws RecipeException {
@@ -406,6 +442,7 @@ public class CoffeeMakerTest {
      * Test adding inventory with invalid unit of coffee
      *
      * @throws InventoryException when use invalid unit in Inventory class
+     * @TestCase D1
      */
     @Test(expected = InventoryException.class)
     public void testAddInvalidCoffeeInventory() throws InventoryException {
@@ -425,6 +462,7 @@ public class CoffeeMakerTest {
      * Test adding inventory with invalid unit of sugar
      *
      * @throws InventoryException when use invalid unit in Inventory class
+     * @TestCase D2
      */
     @Test(expected = InventoryException.class)
     public void testAddInvalidSugarInventory() throws InventoryException {
@@ -444,6 +482,7 @@ public class CoffeeMakerTest {
      * Test adding inventory with invalid unit of milk
      *
      * @throws InventoryException when use invalid unit in Inventory class
+     * @TestCase D3
      */
     @Test(expected = InventoryException.class)
     public void testAddInvalidMilkInventory() throws InventoryException {
@@ -463,6 +502,7 @@ public class CoffeeMakerTest {
      * Test adding inventory with invalid unit of chocolate
      *
      * @throws InventoryException when use invalid unit in Inventory class
+     * @TestCase D4
      */
     @Test(expected = InventoryException.class)
     public void testAddInvalidChocolateInventory() throws InventoryException {
@@ -480,6 +520,7 @@ public class CoffeeMakerTest {
 
     /**
      * Test using ingredients from a recipe
+     * @TestCase D5
      */
     @Test
     public void testUseIngredients() {
@@ -489,5 +530,27 @@ public class CoffeeMakerTest {
         assertEquals(inventory.getSugar(), 14);
         assertEquals(inventory.getMilk(), 14);
         assertEquals(inventory.getChocolate(), 11);
+    }
+
+    /**
+     * Test if enoughIngredients() return correctly
+     * @TestCase D6
+     */
+    @Test
+    public void testCheckEnoughIngredients() throws RecipeException {
+        Inventory inventory = new Inventory();
+        Recipe recipeA = createRecipe("recipeA", 100, 10, 10, 10, 10);
+        Recipe recipeB = createRecipe("recipeB", 100, 15, 15, 15, 15);
+        Recipe recipeC = createRecipe("recipeC", 100, 20, 15, 15, 15);
+        Recipe recipeD = createRecipe("recipeD", 100, 15, 20, 15, 15);
+        Recipe recipeE = createRecipe("recipeE", 100, 15, 15, 20, 15);
+        Recipe recipeF = createRecipe("recipeF", 100, 15, 15, 15, 20);
+
+        assertTrue(inventory.enoughIngredients(recipeA));
+        assertTrue(inventory.enoughIngredients(recipeB));
+        assertFalse(inventory.enoughIngredients(recipeC));
+        assertFalse(inventory.enoughIngredients(recipeD));
+        assertFalse(inventory.enoughIngredients(recipeE));
+        assertFalse(inventory.enoughIngredients(recipeF));
     }
 }
