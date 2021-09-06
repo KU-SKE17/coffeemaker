@@ -520,6 +520,7 @@ public class CoffeeMakerTest {
 
     /**
      * Test using ingredients from a recipe
+     *
      * @TestCase D5
      */
     @Test
@@ -534,6 +535,7 @@ public class CoffeeMakerTest {
 
     /**
      * Test if enoughIngredients() return correctly
+     *
      * @TestCase D6
      */
     @Test
