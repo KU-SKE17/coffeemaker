@@ -30,6 +30,8 @@ import static org.mockito.Mockito.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import io.cucumber.java.en.*;
+
 /**
  * Unit tests for CoffeeMaker class.
  *
@@ -52,6 +54,10 @@ public class CoffeeMakerTest {
     @Mock
     private RecipeBook mockRecipeBook;
     private CoffeeMaker mockCoffeeMaker;
+
+    // tolerance for comparing double values
+    static final double TOL = 1.0E-4;
+    Integer payment;
 
     /**
      * Initializes some recipes to test with and the {@link CoffeeMaker}
@@ -555,5 +561,62 @@ public class CoffeeMakerTest {
         assertFalse(inventory.enoughIngredients(recipeD));
         assertFalse(inventory.enoughIngredients(recipeE));
         assertFalse(inventory.enoughIngredients(recipeF));
+    }
+
+    /**
+     * Initializes a recipe to test using cucumber
+     *
+     * @throws RecipeException if there was an error parsing the ingredient
+     *                         amount when setting up the recipe.
+     */
+    @io.cucumber.java.Before
+    public void setUpScenario() throws RecipeException {
+        coffeeMaker = new CoffeeMaker();
+        //Set up for recipe1
+        recipe1 = createRecipe("Coffee", 50, 3, 1, 1, 0);
+    }
+
+    /**
+     * Set coffee price
+     *
+     * @param price
+     * @throws RecipeException if there was an error parsing the ingredient
+     *                         amount when setting up the recipe.
+     */
+    @Given("I order coffee that cost {int}")
+    public void iOrderCoffeeThatCost(Integer price) throws RecipeException {
+        recipe1.setPrice(price.toString());
+    }
+
+    /**
+     * Set testing payment
+     *
+     * @param amount
+     */
+    @When("I pay {int}")
+    public void iPay(Integer amount) {
+        payment = amount;
+    }
+
+    /**
+     * Check returned change of payment
+     *
+     * @param paymentChange
+     */
+    @Then("I get back {int}")
+    public void iGetBack(Integer paymentChange) {
+        coffeeMaker.addRecipe(recipe1);
+        assertEquals(paymentChange, coffeeMaker.makeCoffee(0, payment), TOL);
+    }
+
+    /**
+     * Set amount of ingredient to make not enough ingredient situation
+     *
+     * @throws RecipeException if there was an error parsing the ingredient
+     *                         amount when setting up the recipe.
+     */
+    @When("I don't have enough ingredients")
+    public void iDontHaveEnoughIngredients() throws RecipeException {
+        recipe1.setAmtCoffee("1000");
     }
 }

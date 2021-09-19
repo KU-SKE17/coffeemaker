@@ -12,11 +12,11 @@ apply plugin: 'jacoco'
 
 
 // Make sure we are using Java 8.
-if(JavaVersion.current() != JavaVersion.VERSION_1_8) 
-    throw new GradleException("This project requires Java 8, but it's running on "+JavaVersion.current())
+if (JavaVersion.current() != JavaVersion.VERSION_1_8)
+    throw new GradleException("This project requires Java 8, but it's running on " + JavaVersion.current())
 
 sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8 
+targetCompatibility = JavaVersion.VERSION_1_8
 
 
 // In this section you declare where to find the dependencies of your project
@@ -27,9 +27,9 @@ repositories {
     mavenCentral()
 }
 
- test {
-     testLogging.showStandardStreams = true
- }
+test {
+    testLogging.showStandardStreams = true
+}
 
 dependencies {
     // Use JUnit test framework
@@ -37,8 +37,30 @@ dependencies {
     // Use mockito test framework
     testImplementation 'org.mockito:mockito-inline:3.+'
     testImplementation 'org.mockito:mockito-junit-jupiter:3.+'
+    // Use cucumber framework
+    testImplementation 'io.cucumber:cucumber-java:6.10.4'
+    testImplementation 'io.cucumber:cucumber-junit:6.10.4'
 
-	// Deprecated.  Use testImplementation.
+//    // Deprecated. Use testImplementation
 //    testCompile 'junit:junit:4.12'
 }
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+task cucumber() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'demo', 'src/test/resources']
+            // other args = ['--snippets', 'camelcase']
+        }
+    }
+}
+
 
