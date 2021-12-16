@@ -57,7 +57,7 @@ task cucumber() {
         javaexec {
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'demo', 'src/test/resources']
+            args = ['--plugin', 'pretty', '--glue', 'edu.ncsu.csc326.coffeemaker', 'src/test/resources']
             // other args = ['--snippets', 'camelcase']
         }
     }
